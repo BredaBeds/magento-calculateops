@@ -62,7 +62,7 @@ class Select extends \Magento\Catalog\Model\Product\Option\Type\Select
         \Magento\Framework\Escaper $escaper,
         array $data = [],
         array $singleSelectionTypes = [],
-        CalculateCustomOptionCatalogRule $calculateCustomOptionCatalogRule = null
+        ?CalculateCustomOptionCatalogRule $calculateCustomOptionCatalogRule = null
     ) {
         $this->string = $string;
         $this->_escaper = $escaper;

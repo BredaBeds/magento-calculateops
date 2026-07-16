@@ -158,13 +158,13 @@ class Option extends \Magento\Catalog\Model\Product\Option
         \Magento\Catalog\Model\Product\Option\Type\Factory $optionFactory,
         \Magento\Framework\Stdlib\StringUtils $string,
         \Magento\Catalog\Model\Product\Option\Validator\Pool $validatorPool,
-        \Magento\Framework\Model\ResourceModel\AbstractResource $resource = null,
-        \Magento\Framework\Data\Collection\AbstractDb $resourceCollection = null,
+        ?\Magento\Framework\Model\ResourceModel\AbstractResource $resource = null,
+        ?\Magento\Framework\Data\Collection\AbstractDb $resourceCollection = null,
         array $data = [],
-        ProductCustomOptionValuesInterfaceFactory $customOptionValuesFactory = null,
+        ?ProductCustomOptionValuesInterfaceFactory $customOptionValuesFactory = null,
         array $optionGroups = [],
         array $optionTypesToGroups = [],
-        CalculateCustomOptionCatalogRule $calculateCustomOptionCatalogRule = null
+        ?CalculateCustomOptionCatalogRule $calculateCustomOptionCatalogRule = null
     ) {
         $this->productOptionValue = $productOptionValue;
         $this->optionTypeFactory = $optionFactory;
@@ -348,7 +348,7 @@ class Option extends \Magento\Catalog\Model\Product\Option
      * @param Product $product
      * @return $this
      */
-    public function setProduct(Product $product = null)
+    public function setProduct(?Product $product = null)
     {
         $this->product = $product;
         return $this;
@@ -837,7 +837,7 @@ class Option extends \Magento\Catalog\Model\Product\Option
      * @param ProductCustomOptionValuesInterface[] $values
      * @return $this
      */
-    public function setValues(array $values = null)
+    public function setValues(?array $values = null)
     {
         $this->values = $values;
         return $this;

@@ -80,7 +80,7 @@ class DefaultType extends \Magento\Catalog\Model\Product\Option\Type\DefaultType
         \Magento\Checkout\Model\Session $checkoutSession,
         \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig,
         array $data = [],
-        CalculateCustomOptionCatalogRule $calculateCustomOptionCatalogRule = null
+        ?CalculateCustomOptionCatalogRule $calculateCustomOptionCatalogRule = null
     ) {
         $this->_checkoutSession = $checkoutSession;
         parent::__construct(

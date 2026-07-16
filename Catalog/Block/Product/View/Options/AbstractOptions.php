@@ -62,7 +62,7 @@ class AbstractOptions extends \Magento\Catalog\Block\Product\View\Options\Abstra
         \Magento\Framework\Pricing\Helper\Data $pricingHelper,
         \Magento\Catalog\Helper\Data $catalogData,
         array $data = [],
-        CalculateCustomOptionCatalogRule $calculateCustomOptionCatalogRule = null
+        ?CalculateCustomOptionCatalogRule $calculateCustomOptionCatalogRule = null
     ) {
         $this->pricingHelper = $pricingHelper;
         $this->_catalogHelper = $catalogData;
@@ -77,7 +77,7 @@ class AbstractOptions extends \Magento\Catalog\Block\Product\View\Options\Abstra
      * @param \Magento\Catalog\Model\Product $product
      * @return \Magento\Catalog\Block\Product\View\Options\AbstractOptions
      */
-    public function setProduct(\Magento\Catalog\Model\Product $product = null)
+    public function setProduct(?\Magento\Catalog\Model\Product $product = null)
     {
         $this->_product = $product;
         return $this;

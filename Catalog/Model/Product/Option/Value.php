@@ -91,11 +91,11 @@ class Value extends \Magento\Catalog\Model\Product\Option\Value
         \Magento\Framework\Model\Context $context,
         \Magento\Framework\Registry $registry,
         \Magento\Catalog\Model\ResourceModel\Product\Option\Value\CollectionFactory $valueCollectionFactory,
-        \Magento\Framework\Model\ResourceModel\AbstractResource $resource = null,
-        \Magento\Framework\Data\Collection\AbstractDb $resourceCollection = null,
+        ?\Magento\Framework\Model\ResourceModel\AbstractResource $resource = null,
+        ?\Magento\Framework\Data\Collection\AbstractDb $resourceCollection = null,
         array $data = [],
-        CustomOptionPriceCalculator $customOptionPriceCalculator = null,
-        CalculateCustomOptionCatalogRule $CalculateCustomOptionCatalogRule = null
+        ?CustomOptionPriceCalculator $customOptionPriceCalculator = null,
+        ?CalculateCustomOptionCatalogRule $CalculateCustomOptionCatalogRule = null
     ) {
         $this->_valueCollectionFactory = $valueCollectionFactory;
         $this->customOptionPriceCalculator = $customOptionPriceCalculator
