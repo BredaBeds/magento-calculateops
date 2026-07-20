@@ -4,11 +4,15 @@ declare(strict_types=1);
 namespace BredaBeds\CalculateOps\Plugin;
 
 use Magento\Catalog\Model\Product;
+use Magento\Catalog\Pricing\Price\ConfiguredPriceInterface;
 use Magento\CatalogRule\Pricing\Price\CatalogRulePrice;
 use Magento\Framework\Pricing\Price\BasePriceProviderInterface;
 
 class PriceCalculator
 {
+
+    // ooedit 2026-07-20 (OOM hotfix): re-entrancy flag, see calculateCustomOptionPrice()
+    private bool $calculating = false;
 
     public function __construct(
         private \Magento\Framework\Pricing\PriceCurrencyInterface $priceCurrency,
@@ -19,6 +23,29 @@ class PriceCalculator
      * Calculate custom option price with catalog rules applied
      */
     public function calculateCustomOptionPrice(
+        Product $product,
+        float $optionPrice,
+        bool $isPercent,
+        string $caller = ''
+    ): float {
+        // ooedit 2026-07-20 (OOM hotfix): re-entrancy guard. When this runs while a
+        // configured price is being computed (cart/order item context), evaluating the
+        // price collection below re-enters getOptionPrice() -> SelectTypePlugin -> here,
+        // recursing until memory_limit (the /customer/section/load OOMs since June).
+        // On re-entry, fall back to the plain option price — no rule adjustment.
+        if ($this->calculating) {
+            return $this->calculateOptionPrice($optionPrice, $isPercent, (float)$product->getPrice());
+        }
+        $this->calculating = true;
+        try {
+            return $this->doCalculateCustomOptionPrice($product, $optionPrice, $isPercent, $caller);
+        } finally {
+            $this->calculating = false;
+        }
+    }
+
+    // ooedit 2026-07-20 (OOM hotfix): original body of calculateCustomOptionPrice, unchanged
+    private function doCalculateCustomOptionPrice(
         Product $product,
         float $optionPrice,
         bool $isPercent,
@@ -64,6 +91,15 @@ class PriceCalculator
     {
         $basePrice = null;
         foreach ($product->getPriceInfo()->getPrices() as $price) {
+            // ooedit 2026-07-20 (OOM hotfix): skip configured prices — they price the
+            // item WITH its custom options (calling getOptionPrice() -> SelectTypePlugin
+            // -> calculateCustomOptionPrice -> back here = infinite recursion), and a
+            // product+options total is not a base product price, so it does not belong
+            // in this min() anyway. ConfiguredRegularPrice extends RegularPrice, which
+            // is why the BasePriceProviderInterface check below did not exclude it.
+            if ($price instanceof ConfiguredPriceInterface) {
+                continue;
+            }
             if ($price instanceof BasePriceProviderInterface
                 && $price->getPriceCode() !== CatalogRulePrice::PRICE_CODE
                 && $price->getValue() !== false
