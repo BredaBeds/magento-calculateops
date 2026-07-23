@@ -17,8 +17,12 @@
 
 
     <!-- Product Option plugins -->
-    <!-- ooedit: bugfix for mirasvit_tm which causes the price to jump when adding a 2nd item to the cart -->
-    <preference for="Mirasvit\Tm\Plugin\PushOnCartAddPlugin" type="BredaBeds\CalculateOps\Model\Mirasvit\PushOnCartAddPlugin" />
+    <!-- ooedit: (removed 2026-07-23) the PushOnCartAddPlugin preference was a bugfix for
+         mirasvit_tm price-jumping when adding a 2nd item; mirasvit/module-tm 1.2.x ships the
+         fix itself (the isObjectNew() guard) and removed the AdditionalProductData class our
+         override depended on. NOTE: our version also wrapped the GTM push in try/catch so a
+         tracking error could never break add-to-cart - vendor does not; re-add a guard if
+         cart errors ever trace back to Mirasvit\Tm. -->
 
     <type name="Magento\Catalog\Model\Product\Option"> 
         <plugin name="bredabeds_calculateops_product_option" type="BredaBeds\CalculateOps\Plugin\ProductOptionPlugin" sortOrder="10"/>
