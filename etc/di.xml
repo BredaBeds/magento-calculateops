@@ -5,17 +5,6 @@
 
     <!-- https://github.com/magento/magento2/pull/38464 -->
 
-    <!-- ooedit: the Rule class below seems to be the same as the preference. disabling it makes no diff -->
-    <!-- <preference for="Magento\CatalogRule\Model\Rule" type="BredaBeds\CalculateOps\CatalogRule\Model\Rule" /> -->
-
-    <!-- <preference for="Magento\Catalog\Model\Product\Option" type="BredaBeds\CalculateOps\Catalog\Model\Product\Option" /> 
-    <preference for="Magento\Catalog\Model\Product\Option\Value" type="BredaBeds\CalculateOps\Catalog\Model\Product\Option\Value" /> 
-    <preference for="Magento\Catalog\Model\Product\Option\Type\Select" type="BredaBeds\CalculateOps\Catalog\Model\Product\Option\Type\Select" />  -->
-    <!-- ooedit: the two preferences below seem to not make any difference on hyva -->
-    <!-- <preference for="Magento\Catalog\Model\Product\Option\Type\DefaultType" type="BredaBeds\CalculateOps\Catalog\Model\Product\Option\Type\DefaultType" /> 
-    <preference for="Magento\Catalog\Block\Product\View\Options\AbstractOptions" type="BredaBeds\CalculateOps\Catalog\Block\Product\View\Options\AbstractOptions" /> -->
-
-
     <!-- Product Option plugins -->
     <!-- ooedit: (removed 2026-07-23) the PushOnCartAddPlugin preference was a bugfix for a
          third-party tag module's price-jumping when adding a 2nd item; that module was removed
